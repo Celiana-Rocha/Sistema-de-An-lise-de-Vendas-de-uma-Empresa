@@ -13,6 +13,15 @@ Projeto criado com SQLite, foi feito um banco de dados criado localmente com dad
 
 # Projeto 🚀
 
+### dashboard para apresentação de relatótio de vendas 
+
+O presente dashbord aborda todas as questões feitas em cima dos dados de forma visual.
+
+<div align= "center">
+ 
+![Captura de tela 2024-09-29 181906](https://github.com/user-attachments/assets/465c4494-85a2-43d6-b08d-b50d0895133f)
+
+</div>
 
 
  
@@ -138,9 +147,23 @@ INSERT INTO regions (region, country, sales_target) VALUES
 
 ## Consultas para Análise de Dados 🖥
 
+
 ### 1. Total de Vendas por Produto
 
 Descobrir o total de vendas de cada produto.
+
+|  Produto   | Total_Vendido | 	
+|  ---       | ---           |
+| Geladeira  |	 1200.0       |   
+|  Laptop	   | 3000.0        |    	
+| Smartphone |	 	800.0       |	  
+
+	
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
+
 
 ```
 SELECT t2.name AS Produto, SUM(t1.total_price) AS Total_Vendido
@@ -150,9 +173,22 @@ GROUP BY t2.name;
 
 ```
 
+</details>
+
 ### 2. Quantidade Vendida por Categoria
 
 Verificar quantos itens de cada categoria foram vendidos.
+
+|  Categoria        | Quantidade_Vendida | 	
+|  ---              | ---                |
+| Eletrodomésticos  |	1                  |   
+| Eletrônicos	      |	3                  |    	
+  
+
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
 
 ```
 SELECT t2.category AS Categoria, SUM(t1.quantity) AS Quantidade_Vendida
@@ -161,10 +197,24 @@ JOIN products t2 ON t1.product_id = t2.id
 GROUP BY t2.category;
 
 ```
+</details>
+
 
 ### 3. Total de Vendas por Região
 
 Consultar as vendas totais por região.
+
+| Regiao        | Total_Vendido  | 	
+|  ---          | ---            |
+| Norte         | 3000.0         |   
+| Sudeste	      |	1200.0         |    	
+| Sul           |	800.0          |
+	
+	
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
 
 ```
 SELECT c.region AS Regiao, SUM(s.total_price) AS Total_Vendido
@@ -172,10 +222,20 @@ FROM sales s
 JOIN customers c ON s.customer_id = c.id
 GROUP BY c.region;
 ```
+</details>
+
 
 ### 4. Clientes que Compraram Mais de R$ 2000
 
 Filtrar os clientes que gastaram mais de um valor específico.
+
+| Cliente   	| Valor_Gasto | 
+|  --------  |  ---------  |
+| João Silva	| 3000.0      |
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
 
 ```
 SELECT c.name AS Cliente, SUM(s.total_price) AS Valor_Gasto
@@ -185,11 +245,23 @@ GROUP BY c.name
 HAVING SUM(s.total_price) > 2000;
 
 ```
+</details>
 
 
 ### 5. Comparação entre Meta e Vendas por Região
 
 Verificar se as regiões atingiram a meta de vendas.
+
+|  region  | 	sales_target  | 	Vendas_Reais  |
+|  ---     | ---            | ---            |
+|  Norte   |	 50000.0       |    	3000.0     |
+|  Sudeste	| 80000.0        |    	1200.0     |
+|  Sul     |	 60000.0       |	    800.0      |
+
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
 
 ```
 SELECT r.region, r.sales_target, SUM(s.total_price) AS Vendas_Reais
@@ -199,10 +271,20 @@ JOIN regions r ON c.region = r.region
 GROUP BY r.region;
 
 ```
+</details>
+
 
 ### 6. Produto Mais Vendido
 
 Identificar qual produto teve o maior volume de vendas.
+
+| Produto |	Quantidade_Vendida | 
+| ------- |  ----------------  |
+| Laptop  | 2                  |
+
+<details>
+
+<summary> Código SQL ⌨ </summary>
 
 ```
 SELECT p.name AS Produto, SUM(s.quantity) AS Quantidade_Vendida
@@ -213,6 +295,7 @@ ORDER BY Quantidade_Vendida DESC
 LIMIT 1;
 
 ```
+</details>
 
 # Considerações Finais
 
